@@ -7,6 +7,11 @@ const routes: Routes = [
     path: "", component: HomeComponent
   },
 
+  //load movie module
+  {
+    path: "movies", loadChildren: () => import("./movies/movies.component").then(mod => mod.MoviesComponent)
+  },
+
   // load the admin module(along with its components) lazily
   // http://localhost:4200/admin
   {
