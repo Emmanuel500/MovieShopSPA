@@ -10,7 +10,6 @@ export class MoviesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
 }
