@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
         console.log(this.movieCards)
       }
     );
-
   }
 
   // get to 30 movies from API and send the data to view

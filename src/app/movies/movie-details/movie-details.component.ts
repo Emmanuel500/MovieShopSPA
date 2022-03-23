@@ -9,20 +9,21 @@ import { MovieDetails } from 'src/app/shared/models/moviedetails';
   styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
-
+  //!!!
+  movieId: number = 0;
   movieDetails!: MovieDetails;
-  constructor(private movieService: MovieService, private route: ActivatedRoute) { }
+  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // First get the movie id from the current route.
-    const routeParams = this.route.snapshot.paramMap;
-    const productIdFromRoute = Number(routeParams.get('movieId'));
 
-    console.log('inside ngOn Init life cycle hook method')
-    this.movieService.getDetailMovie(productIdFromRoute).subscribe(
-      m => {
-        this.movieDetails = m;
-        console.log(this.movieDetails)
+    this.activatedRoute.paramMap.subscribe(
+      p => {
+        this.movieId = Number(p.get('movieId'));
+        this.movieService.getDetailMovie(this.movieId).subscribe(
+          m => {
+            this.movieDetails = m;
+          }
+        );
       }
     );
   }

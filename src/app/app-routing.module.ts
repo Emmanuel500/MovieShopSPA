@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
-import { PurchasesComponent } from './user/purchases/purchases.component';
 
 const routes: Routes = [
   {
@@ -11,12 +9,17 @@ const routes: Routes = [
 
   //load movie details page
   {
-    path: "movies/:movieId", component: MovieDetailsComponent
+    path: "movies", loadChildren: () => import("./movies/movies.module").then(mod => mod.MoviesModule)
   },
 
-  //load  user purchases page
+  //load account
   {
-    path: "user/purchases", component: PurchasesComponent
+    path: "account", loadChildren: () => import("./account/account.module").then(mod => mod.AccountModule)
+  },
+
+  //load user
+  {
+    path: "user", loadChildren: () => import("./user/user.module").then(mod => mod.UserModule)
   },
 
   // load the admin module(along with its components) lazily

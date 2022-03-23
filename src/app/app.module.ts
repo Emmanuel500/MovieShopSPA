@@ -7,8 +7,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { MovieCardComponent } from './shared/components/movie-card/movie-card.component';
-import { MoviesModule } from './movies/movies.module';
-import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -20,9 +18,7 @@ import { UserModule } from './user/user.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    MoviesModule,
-    UserModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,8 +13,16 @@
                 </div>
             </div>
 
-            <!-- Rating -->
-            <span *ngIf="movieDetails.rating != null" class="badge bg-secondary mb-2">Rating: {{movieDetails.rating}}</span>
+            <!-- Rating !!! Change color !!! -->
+            <h4>
+                Rating: 
+                <span class="badge mb-2 btn-secondary" [ngClass]="{'btn-success': movieDetails.rating >= 9,
+                                                                   'btn-info': movieDetails.rating >= 8 && movieDetails.rating < 9,
+                                                                   'btn-warning': movieDetails.rating > 0 && movieDetails.rating <= 4,
+                                                                   'btn-danger' : movieDetails.rating==0}">
+                    {{movieDetails.rating | number:'1.1-2'}}
+                </span>
+            </h4>
 
             <!--Favorite -->
             <form asp-controller="User"  asp-action="FavoriteMovie"  method="post">
@@ -145,10 +153,10 @@
             <h3 class="my-1">Movie Facts</h3>
             <hr/>
             <ul class="list-group">
-              <li class="list-group-item">Release Date: {{movieDetails.releaseDate}}</li>
+              <li class="list-group-item">Release Date: {{movieDetails.releaseDate | date}}</li>
               <li class="list-group-item">Run Time: {{movieDetails.runTime}} minutes</li>
-              <li class="list-group-item">Box Office: ${{movieDetails.revenue}}</li>
-              <li class="list-group-item">Budget: ${{movieDetails.budget}}</li>
+              <li class="list-group-item">Box Office: {{movieDetails.revenue | currency}}</li>
+              <li class="list-group-item">Budget: ${{movieDetails.budget | currency}}</li>
             </ul>
 
             <h3 class="my-1">Trailers</h3>
