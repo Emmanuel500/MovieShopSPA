@@ -9,17 +9,18 @@
             <h6 class="mb-3">{{movieDetails.tagline}}</h6>
             <div class="row d-flex align-items-end mb-2">
                 <div *ngFor="let genre of movieDetails.genres" class="col">
-                    <span class="badge bg-secondary">{{genre.name}}</span>
+                    <a [routerLink]="['/movies/genre/', genre.id]" [queryParams]="{pageNumber:1}"> 
+                        <span class="badge bg-secondary">{{genre.name}}</span>
+                    </a>
                 </div>
             </div>
 
             <!-- Rating !!! Change color !!! -->
             <h4>
                 Rating: 
-                <span class="badge mb-2 btn-secondary" [ngClass]="{'btn-success': movieDetails.rating >= 9,
-                                                                   'btn-info': movieDetails.rating >= 8 && movieDetails.rating < 9,
-                                                                   'btn-warning': movieDetails.rating > 0 && movieDetails.rating <= 4,
-                                                                   'btn-danger' : movieDetails.rating==0}">
+                <span class="badge mb-2 btn-secondary" [ngClass]="{'btn-success': movieDetails.rating >= 8,
+                                                                   'btn-warning': movieDetails.rating < 8 && movieDetails.rating >= 7,
+                                                                   'btn-danger' : movieDetails.rating < 7}">
                     {{movieDetails.rating | number:'1.1-2'}}
                 </span>
             </h4>

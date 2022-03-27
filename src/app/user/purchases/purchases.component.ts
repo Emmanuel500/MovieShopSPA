@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MovieCard } from 'src/app/shared/models/moviecard';
+import { User } from 'src/app/shared/models/User';
 
 @Component({
   selector: 'app-purchases',
@@ -10,11 +12,14 @@ import { MovieCard } from 'src/app/shared/models/moviecard';
 export class PurchasesComponent implements OnInit {
   
   movieCards!: MovieCard[];
-  constructor(private userService: UserService) { }
+  user!: User;
+
+  constructor(private userService: UserService, private authService: AuthenticationService) {
+    this.authService.currentUser.subscribe(resp => this.user = resp);
+  }
 
   ngOnInit(): void {
-    console.log('inside ngOn Init life cycle hook method')
-    this.userService.getPurchasedMovies().subscribe(
+    this.userService.getPurchasedMovies(this.user.nameid).subscribe(
       m => {
         this.movieCards = m;
         console.log(this.movieCards)

@@ -1,5 +1,3 @@
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Movie Shop</a>
@@ -18,7 +16,9 @@
                         Genres
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li *ngFor="let genre of genreList"><a class="dropdown-item" href="#">{{genre.name}}</a></li>
+                        <li *ngFor="let genre of genreList">
+                            <a class="dropdown-item" [routerLink]="['/movies/genre/', genre.id]" [queryParams]="{pageNumber:1}">{{genre.name}}</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
