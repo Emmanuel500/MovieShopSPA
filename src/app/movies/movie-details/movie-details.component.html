@@ -28,24 +28,30 @@
             <!--Favorite -->
             <form asp-controller="User"  asp-action="FavoriteMovie"  method="post">
                 <div class="my-1">
-                <!--@if (@ViewBag.MovieFavorited)
-                    {
-                        <button type="submit" class="btn btn-warning">
+
+                    <!--If logged in, check if userfavorited-->
+                    <ng-container *ngIf="isLoggedIn">
+                        <button *ngIf="userFavorited" type="submit" class="btn btn-warning">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
                             </svg>
                             Favorited
                         </button>
-                    }
-                    else
-                    {-->
-                        <button type="submit" name="btnFavMovie" class="btn btn-outline-danger">
+                        <button *ngIf="!userFavorited" type="submit" name="btnFavMovie" class="btn btn-outline-danger">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
                             </svg>
                             Not Favorited
                         </button>
-                <!--}-->
+                    </ng-container>
+                    <!--else-->
+                    <button *ngIf="!isLoggedIn" type="submit" name="btnFavMovie" class="btn btn-outline-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                        </svg>
+                        Not Favorited
+                    </button>
+                    
                 </div>
                 <!--Passing Movie ID-->
                 <input type="hidden" value="{{movieDetails.id}}" name="MovieId">
@@ -74,23 +80,31 @@
                                     <div class="dropdown mb-2">
                                         <h3>Rating</h3>
                                         <select class="form-select" aria-label="Select a rating" name="Rating">
-                                      <!--<option value=@ViewBag.Rating selected>@ViewBag.Rating</option>-->
-                                          <option value="0">0</option>
-                                          <option value="1">1</option>
-                                          <option value="2">2</option>
-                                          <option value="3">3</option>
-                                          <option value="4">4</option>
-                                          <option value="5">5</option>
-                                          <option value="6">6</option>
-                                          <option value="7">7</option>
-                                          <option value="8">8</option>
-                                          <option value="9">9</option>
-                                          <option value="10">10</option>
+                                            <ng-container *ngIf="isLoggedIn">
+                                                <option *ngIf="userReview.rating != null" value={{userReview.rating}} selected>{{userReview.rating}}</option>
+                                            </ng-container>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
                                         </select>
                                     </div>
                                     <div class="form-group  mt-4">
                                         <label for="Review Comment Area">Review Comment</label>
-                                        <textarea class="form-control" name="ReviewText" rows="3"><!--@ViewBag.ReviewText--></textarea>
+                                        <ng-container *ngIf="isLoggedIn">
+                                            <textarea *ngIf="userReview.reviewText != null; else noText" class="form-control" name="ReviewText" rows="3">{{userReview.reviewText}}</textarea>
+                                            <ng-template #noText></ng-template>
+                                        </ng-container>
+                                        <textarea *ngIf="!isLoggedIn" class="form-control" name="ReviewText" rows="3">
+                                            
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -107,20 +121,20 @@
                 </form>
                 
                 
-
-                <!--If Purchased then watching, else buying-->
-            <!--@if (@ViewBag.MoviePurchased)
-                {
-                    <div class="row pt-1">
+                <!--If Logged in: if Purchased then watching, else buying-->
+                <ng-container *ngIf="isLoggedIn">
+                    <div *ngIf="userPurchased" class="row pt-1">
                         <button type="button" class="btn btn-primary">Watch MOVIE</button>
                     </div>
-                }
-                else
-                {-->
-                    <div class="row pt-1">
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buyModal">Buy ${{movieDetails.price}}</button>
+                    <div *ngIf="!userPurchased" class="row pt-1">
+                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buyModal">Buy ${{movieDetails.price | currency}}</button>
                     </div>
-            <!--}-->
+                </ng-container>
+                <div *ngIf="!isLoggedIn" class="row pt-1">
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buyModal">Buy ${{movieDetails.price | currency}}</button>
+                </div>
+                
+
                 <form asp-controller="User"  asp-action="BuyMovie"  method="post">
                     <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="Buying" aria-hidden="true" style="color:black">
                       <div class="modal-dialog">
