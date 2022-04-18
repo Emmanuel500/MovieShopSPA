@@ -14,6 +14,11 @@ const routes: Routes = [
     path: "movies", loadChildren: () => import("./movies/movies.module").then(mod => mod.MoviesModule)
   },
 
+  //load cast
+  {
+    path: "cast", loadChildren: () => import("./cast/cast.module").then(mod => mod.CastModule)
+  },
+
   //load account
   {
     path: "account", loadChildren: () => import("./account/account.module").then(mod => mod.AccountModule)
